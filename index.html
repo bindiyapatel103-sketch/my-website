@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My React Website</title>
+  <!-- Load React -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Load Babel to understand JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Your JSX code -->
+  <script type="text/babel">
+    // Paste your JSX code here
+    function App() {
+      return import React, { useState, useEffect } from 'react';
+import { AlertCircle, TrendingDown, TrendingUp, Clock, Film, Music, Hash, Calendar, Activity, Users, Eye, Heart, Share2, MessageCircle } from 'lucide-react';
+
+const CreatorMomentumDashboard = () => {
+  const [selectedCreator, setSelectedCreator] = useState(null);
+  const [timeRange, setTimeRange] = useState('30d');
+  
+  // Synthetic creator data with realistic patterns
+  const creators = [
+    {
+      id: 1,
+      name: "Sarah Martinez",
+      handle: "@sarahfitness",
+      riskLevel: "HIGH",
+      riskScore: 0.87,
+      profileImage: "🏋️",
+      videos_posted: 8,
+      avg_views_before: 15000,
+      avg_views_after: 1200,
+      avg_likes_before: 1800,
+      avg_likes_after: 150,
+      engagement_rate: 0.08,
+      uses_trending_audio: false,
+      posts_per_week: 1.2,
+      days_since_last_post: 8,
+      primary_topic_before: "Fitness & Workouts",
+      current_topic: "Meal Prep",
+      video_length_before: 45,
+      video_length_after: 15,
+      optimal_posting_time: "7:00 PM EST",
+      actual_posting_time: "11:00 AM EST",
+      days_since_dip: 22,
+      uses_trending_filters: false,
+      has_external_link: false,
+      follower_count: 5200,
+      follower_growth: -15,
+      reasons: [
+        { factor: "Topic Shift", severity: "critical", description: "Switched from Fitness to Meal Prep - audience mismatch" },
+        { factor: "Video Length Change", severity: "high", description: "Videos decreased from 45s to 15s - losing watch time" },
+        { factor: "No Trending Audio", severity: "high", description: "Not using trending sounds for 22 days" },
+        { factor: "Suboptimal Posting Time", severity: "medium", description: "Posting at 11 AM instead of optimal 7 PM" },
+        { factor: "Low Posting Frequency", severity: "medium", description: "Only 1.2 posts/week, down from previous 4/week" }
+      ]
+    },
+    {
+      id: 2,
+      name: "Marcus Chen",
+      handle: "@techtalkmarcus",
+      riskLevel: "MEDIUM",
+      riskScore: 0.61,
+      profileImage: "💻",
+      videos_posted: 15,
+      avg_views_before: 8500,
+      avg_views_after: 3200,
+      avg_likes_before: 890,
+      avg_likes_after: 420,
+      engagement_rate: 0.13,
+      uses_trending_audio: true,
+      posts_per_week: 2.5,
+      days_since_last_post: 4,
+      primary_topic_before: "Tech Reviews",
+      current_topic: "Tech Reviews",
+      video_length_before: 60,
+      video_length_after: 75,
+      optimal_posting_time: "8:00 PM EST",
+      actual_posting_time: "8:30 PM EST",
+      days_since_dip: 14,
+      uses_trending_filters: true,
+      has_external_link: true,
+      follower_count: 12500,
+      follower_growth: -3,
+      reasons: [
+        { factor: "Algorithm Update Impact", severity: "high", description: "Recent algorithm prioritizes shorter, search-optimized content" },
+        { factor: "Increased Video Length", severity: "medium", description: "Videos increased from 60s to 75s - may reduce completion rate" },
+        { factor: "High Competition", severity: "medium", description: "Tech niche saturation with similar content" }
+      ]
+    },
+    {
+      id: 3,
+      name: "Aisha Johnson",
+      handle: "@aishabeauty",
+      riskLevel: "LOW",
+      riskScore: 0.23,
+      profileImage: "💄",
+      videos_posted: 24,
+      avg_views_before: 22000,
+      avg_views_after: 19500,
+      avg_likes_before: 3200,
+      avg_likes_after: 2900,
+      engagement_rate: 0.15,
+      uses_trending_audio: true,
+      posts_per_week: 5.5,
+      days_since_last_post: 1,
+      primary_topic_before: "Makeup Tutorials",
+      current_topic: "Makeup Tutorials",
+      video_length_before: 50,
+      video_length_after: 52,
+      optimal_posting_time: "6:00 PM EST",
+      actual_posting_time: "6:15 PM EST",
+      days_since_dip: 7,
+      uses_trending_filters: true,
+      has_external_link: true,
+      follower_count: 28000,
+      follower_growth: 8,
+      reasons: [
+        { factor: "Minor Seasonal Dip", severity: "low", description: "Expected seasonal variation in beauty content" },
+        { factor: "Slight Posting Time Variance", severity: "low", description: "15-minute difference from optimal time" }
+      ]
+    },
+    {
+      id: 4,
+      name: "Jake Williams",
+      handle: "@comedyjake",
+      riskLevel: "HIGH",
+      riskScore: 0.92,
+      profileImage: "😂",
+      videos_posted: 5,
+      avg_views_before: 45000,
+      avg_views_after: 800,
+      avg_likes_before: 8200,
+      avg_likes_after: 120,
+      engagement_rate: 0.06,
+      uses_trending_audio: false,
+      posts_per_week: 0.8,
+      days_since_last_post: 12,
+      primary_topic_before: "Comedy Skits",
+      current_topic: "Daily Vlogs",
+      video_length_before: 30,
+      video_length_after: 120,
+      optimal_posting_time: "9:00 PM EST",
+      actual_posting_time: "2:00 PM EST",
+      days_since_dip: 28,
+      uses_trending_filters: false,
+      has_external_link: false,
+      follower_count: 18500,
+      follower_growth: -22,
+      reasons: [
+        { factor: "Drastic Topic Change", severity: "critical", description: "Shifted from Comedy to Vlogs - complete audience mismatch" },
+        { factor: "Extended Posting Gap", severity: "critical", description: "12 days since last post, was posting daily before" },
+        { factor: "Video Length Quadrupled", severity: "high", description: "30s to 120s - massive retention drop" },
+        { factor: "Wrong Posting Time", severity: "high", description: "7 hours before optimal engagement window" },
+        { factor: "No Trending Elements", severity: "high", description: "Not using any trending audio or filters for 28 days" },
+        { factor: "Inconsistent Posting", severity: "medium", description: "Down to 0.8 posts/week from previous 7/week" }
+      ]
+    },
+    {
+      id: 5,
+      name: "Emma Rodriguez",
+      handle: "@emmaarts",
+      riskLevel: "MEDIUM",
+      riskScore: 0.58,
+      profileImage: "🎨",
+      videos_posted: 12,
+      avg_views_before: 12000,
+      avg_views_after: 5500,
+      avg_likes_before: 1500,
+      avg_likes_after: 680,
+      engagement_rate: 0.11,
+      uses_trending_audio: true,
+      posts_per_week: 3.0,
+      days_since_last_post: 3,
+      primary_topic_before: "Digital Art",
+      current_topic: "Traditional Painting",
+      video_length_before: 40,
+      video_length_after: 35,
+      optimal_posting_time: "5:00 PM EST",
+      actual_posting_time: "10:00 AM EST",
+      days_since_dip: 18,
+      uses_trending_filters: true,
+      has_external_link: true,
+      follower_count: 9800,
+      follower_growth: -5,
+      reasons: [
+        { factor: "Medium Topic Shift", severity: "high", description: "Changed from Digital to Traditional art - partial audience overlap" },
+        { factor: "Suboptimal Timing", severity: "medium", description: "Posting 7 hours before peak engagement" },
+        { factor: "Content Quality Perception", severity: "medium", description: "Traditional painting harder to film engagingly than digital timelapse" }
+      ]
+    }
+  ];
+
+  // Crowdsourced reasons for viewership drops
+  const commonDropReasons = [
+    {
+      category: "Algorithm Changes",
+      impact: "High",
+      description: "TikTok now prioritizes search optimization, longer watch time, and content for new audiences over existing followers",
+      frequency: "Very Common"
+    },
+    {
+      category: "Topic/Content Shift",
+      impact: "Critical",
+      description: "Changing content niche confuses the algorithm about target audience and alienates existing followers",
+      frequency: "Common"
+    },
+    {
+      category: "Not Following Trends",
+      impact: "High",
+      description: "Ignoring trending audio, effects, and topics reduces discoverability and engagement",
+      frequency: "Very Common"
+    },
+    {
+      category: "Video Length Changes",
+      impact: "High",
+      description: "Drastic changes in video duration affect watch time and completion rates",
+      frequency: "Common"
+    },
+    {
+      category: "Inconsistent Posting",
+      impact: "High",
+      description: "Algorithm deprioritizes accounts with irregular posting schedules",
+      frequency: "Very Common"
+    },
+    {
+      category: "Wrong Posting Time",
+      impact: "Medium",
+      description: "Posting outside of audience's active hours reduces initial engagement signals",
+      frequency: "Common"
+    },
+    {
+      category: "Poor Quality Content",
+      impact: "Critical",
+      description: "Low resolution, poor editing, or unoriginal content gets deprioritized",
+      frequency: "Common"
+    },
+    {
+      category: "Shadow Ban",
+      impact: "Critical",
+      description: "Community guideline violations limit content distribution without notification",
+      frequency: "Uncommon"
+    },
+    {
+      category: "Increased Competition",
+      impact: "Medium",
+      description: "Over 1 billion users means higher competition for attention in every niche",
+      frequency: "Very Common"
+    },
+    {
+      category: "Lack of SEO Keywords",
+      impact: "Medium",
+      description: "Missing keywords in captions/descriptions reduces search discoverability",
+      frequency: "Common"
+    },
+    {
+      category: "Content Fatigue",
+      impact: "Medium",
+      description: "Audience has seen similar content too many times",
+      frequency: "Common"
+    },
+    {
+      category: "Platform Feature Changes",
+      impact: "Medium",
+      description: "New features (Stories, TikTok Shop) can shift algorithmic priorities",
+      frequency: "Occasional"
+    }
+  ];
+
+  const getRiskColor = (level) => {
+    switch(level) {
+      case 'HIGH': return 'bg-red-100 text-red-800 border-red-300';
+      case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+      case 'LOW': return 'bg-green-100 text-green-800 border-green-300';
+      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+    }
+  };
+
+  const getSeverityColor = (severity) => {
+    switch(severity) {
+      case 'critical': return 'bg-red-500 text-white';
+      case 'high': return 'bg-orange-500 text-white';
+      case 'medium': return 'bg-yellow-500 text-white';
+      case 'low': return 'bg-blue-500 text-white';
+      default: return 'bg-gray-500 text-white';
+    }
+  };
+
+  const getImpactColor = (impact) => {
+    switch(impact) {
+      case 'Critical': return 'text-red-600 font-bold';
+      case 'High': return 'text-orange-600 font-semibold';
+      case 'Medium': return 'text-yellow-600';
+      default: return 'text-gray-600';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <Activity className="w-10 h-10 text-purple-600" />
+            <h1 className="text-4xl font-bold text-gray-900">Creator Momentum AI</h1>
+          </div>
+          <p className="text-gray-600 text-lg">Predicting Early Creator Drop-off & Triggering Product Interventions</p>
+        </div>
+
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm">High Risk</p>
+                <p className="text-3xl font-bold text-red-600">
+                  {creators.filter(c => c.riskLevel === 'HIGH').length}
+                </p>
+              </div>
+              <AlertCircle className="w-12 h-12 text-red-500 opacity-20" />
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm">Medium Risk</p>
+                <p className="text-3xl font-bold text-yellow-600">
+                  {creators.filter(c => c.riskLevel === 'MEDIUM').length}
+                </p>
+              </div>
+              <TrendingDown className="w-12 h-12 text-yellow-500 opacity-20" />
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm">Low Risk</p>
+                <p className="text-3xl font-bold text-green-600">
+                  {creators.filter(c => c.riskLevel === 'LOW').length}
+                </p>
+              </div>
+              <TrendingUp className="w-12 h-12 text-green-500 opacity-20" />
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-500 text-sm">Total Monitored</p>
+                <p className="text-3xl font-bold text-purple-600">{creators.length}</p>
+              </div>
+              <Users className="w-12 h-12 text-purple-500 opacity-20" />
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Creator List */}
+          <div className="lg:col-span-1 bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Users className="w-6 h-6 text-purple-600" />
+              At-Risk Creators
+            </h2>
+            
+            <div className="space-y-3">
+              {creators.sort((a, b) => b.riskScore - a.riskScore).map(creator => (
+                <div
+                  key={creator.id}
+                  onClick={() => setSelectedCreator(creator)}
+                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                    selectedCreator?.id === creator.id 
+                      ? 'border-purple-500 bg-purple-50' 
+                      : 'border-gray-200 hover:border-purple-300'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="text-3xl">{creator.profileImage}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-semibold text-gray-900 truncate">{creator.name}</h3>
+                        <span className={`px-2 py-1 rounded-full text-xs font-bold ${getRiskColor(creator.riskLevel)}`}>
+                          {creator.riskLevel}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-500 truncate">{creator.handle}</p>
+                      <div className="mt-2 flex items-center gap-2">
+                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                          <div 
+                            className={`h-2 rounded-full ${
+                              creator.riskLevel === 'HIGH' ? 'bg-red-500' :
+                              creator.riskLevel === 'MEDIUM' ? 'bg-yellow-500' : 'bg-green-500'
+                            }`}
+                            style={{ width: `${creator.riskScore * 100}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-medium text-gray-600">
+                          {Math.round(creator.riskScore * 100)}%
+                        </span>
+                      </div>
+                      <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-3 h-3" />
+                          {(creator.avg_views_after / 1000).toFixed(1)}K
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <TrendingDown className="w-3 h-3 text-red-500" />
+                          {Math.round(((creator.avg_views_before - creator.avg_views_after) / creator.avg_views_before) * 100)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Creator Detail & Insights */}
+          <div className="lg:col-span-2 space-y-6">
+            {selectedCreator ? (
+              <>
+                {/* Creator Overview */}
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="text-6xl">{selectedCreator.profileImage}</div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-gray-900">{selectedCreator.name}</h2>
+                        <p className="text-gray-600">{selectedCreator.handle}</p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className={`px-3 py-1 rounded-full text-sm font-bold border-2 ${getRiskColor(selectedCreator.riskLevel)}`}>
+                            {selectedCreator.riskLevel} RISK
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            Risk Score: {Math.round(selectedCreator.riskScore * 100)}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Metrics */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Eye className="w-4 h-4 text-gray-500" />
+                        <span className="text-xs text-gray-500">Avg Views</span>
+                      </div>
+                      <div className="text-sm">
+                        <span className="line-through text-gray-400">{(selectedCreator.avg_views_before / 1000).toFixed(1)}K</span>
+                        <span className="ml-2 font-bold text-red-600">{(selectedCreator.avg_views_after / 1000).toFixed(1)}K</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Heart className="w-4 h-4 text-gray-500" />
+                        <span className="text-xs text-gray-500">Avg Likes</span>
+                      </div>
+                      <div className="text-sm">
+                        <span className="line-through text-gray-400">{(selectedCreator.avg_likes_before / 1000).toFixed(1)}K</span>
+                        <span className="ml-2 font-bold text-red-600">{(selectedCreator.avg_likes_after / 1000).toFixed(1)}K</span>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Film className="w-4 h-4 text-gray-500" />
+                        <span className="text-xs text-gray-500">Posts/Week</span>
+                      </div>
+                      <div className="text-sm font-bold text-gray-900">
+                        {selectedCreator.posts_per_week.toFixed(1)}
+                      </div>
+                    </div>
+                    
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Clock className="w-4 h-4 text-gray-500" />
+                        <span className="text-xs text-gray-500">Days Since Post</span>
+                      </div>
+                      <div className="text-sm font-bold text-gray-900">
+                        {selectedCreator.days_since_last_post}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Drop-off Factors */}
+                  <div>
+                    <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5 text-red-500" />
+                      Identified Drop-off Factors
+                    </h3>
+                    <div className="space-y-2">
+                      {selectedCreator.reasons.map((reason, idx) => (
+                        <div key={idx} className="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-300">
+                          <div className="flex items-start justify-between mb-2">
+                            <span className="font-semibold text-gray-900">{reason.factor}</span>
+                            <span className={`px-2 py-1 rounded text-xs font-bold ${getSeverityColor(reason.severity)}`}>
+                              {reason.severity.toUpperCase()}
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-600">{reason.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* AI-Powered Recommendations with Action Tracking */}
+                <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg shadow-lg p-6 text-white">
+                  <h3 className="font-bold text-xl mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-6 h-6" />
+                    AI-Powered Product Interventions
+                  </h3>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-lg p-4 mb-4">
+                    <p className="text-sm font-semibold mb-2">📊 Intervention Priority Score</p>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 bg-white/20 rounded-full h-3">
+                        <div 
+                          className="bg-yellow-300 h-3 rounded-full"
+                          style={{ width: `${selectedCreator.riskScore * 100}%` }}
+                        />
+                      </div>
+                      <span className="font-bold">{Math.round(selectedCreator.riskScore * 100)}%</span>
+                    </div>
+                    <p className="text-xs mt-2 opacity-80">
+                      {selectedCreator.riskScore > 0.8 ? '⚠️ Immediate intervention recommended' :
+                       selectedCreator.riskScore > 0.5 ? '⚡ Action recommended within 48 hours' :
+                       '✅ Monitor and encourage'}
+                    </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    {!selectedCreator.uses_trending_audio && (
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-4 hover:bg-white/20 transition cursor-pointer">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-white/20 rounded-full p-2">
+                            <Music className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-bold">Use Trending Audio</p>
+                              <span className="bg-red-500 text-xs px-2 py-1 rounded-full font-bold">CRITICAL</span>
+                            </div>
+                            <p className="text-sm opacity-90 mb-3">
+                              {selectedCreator.days_since_dip} days without trending audio. We've identified 5 viral sounds in "{selectedCreator.primary_topic_before}".
+                            </p>
+                            <div className="space-y-2">
+                              <div className="bg-white/10 rounded p-2 text-xs">
+                                <p className="font-semibold mb-1">🎵 Top Trending Sounds for You:</p>
+                                <ul className="space-y-1 ml-4">
+                                  <li>• "Workout Motivation Mix" - 2.3M videos</li>
+                                  <li>• "Gym Fails Remix" - 1.8M videos</li>
+                                  <li>• "Beast Mode Audio" - 1.2M videos</li>
+                                </ul>
+                              </div>
+                              <button className="w-full bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-50 transition">
+                                📱 Send Push Notification: "Try These Trending Sounds"
+                              </button>
+                              <div className="grid grid-cols-2 gap-2">
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Browse All Sounds
+                                </button>
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Auto-Suggest in Editor
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {selectedCreator.primary_topic_before !== selectedCreator.current_topic && (
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-4 hover:bg-white/20 transition cursor-pointer">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-white/20 rounded-full p-2">
+                            <Hash className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-bold">Return to Your Winning Topic</p>
+                              <span className="bg-orange-500 text-xs px-2 py-1 rounded-full font-bold">HIGH</span>
+                            </div>
+                            <p className="text-sm opacity-90 mb-3">
+                              Your "{selectedCreator.primary_topic_before}" content averaged {(selectedCreator.avg_views_before / 1000).toFixed(1)}K views. Current "{selectedCreator.current_topic}" only gets {(selectedCreator.avg_views_after / 1000).toFixed(1)}K views.
+                            </p>
+                            <div className="space-y-2">
+                              <div className="bg-white/10 rounded p-2 text-xs">
+                                <p className="font-semibold mb-1">📈 Your Best Performing Topics:</p>
+                                <div className="flex items-center justify-between">
+                                  <span>{selectedCreator.primary_topic_before}</span>
+                                  <span className="font-bold text-green-300">↑ 1,200% better</span>
+                                </div>
+                              </div>
+                              <button className="w-full bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-50 transition">
+                                💡 Send In-App Message: "Go Back to What Worked"
+                              </button>
+                              <div className="grid grid-cols-2 gap-2">
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Show Analytics
+                                </button>
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Topic Suggestions
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {selectedCreator.optimal_posting_time !== selectedCreator.actual_posting_time && (
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-4 hover:bg-white/20 transition cursor-pointer">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-white/20 rounded-full p-2">
+                            <Clock className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-bold">Optimize Your Posting Time</p>
+                              <span className="bg-yellow-500 text-xs px-2 py-1 rounded-full font-bold text-black">MEDIUM</span>
+                            </div>
+                            <p className="text-sm opacity-90 mb-3">
+                              Your audience is most active at {selectedCreator.optimal_posting_time}. You're posting at {selectedCreator.actual_posting_time}.
+                            </p>
+                            <div className="space-y-2">
+                              <div className="bg-white/10 rounded p-2 text-xs">
+                                <p className="font-semibold mb-1">⏰ Optimal Posting Schedule:</p>
+                                <div className="grid grid-cols-7 gap-1 mt-2">
+                                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, idx) => (
+                                    <div key={idx} className="text-center">
+                                      <div className="text-[10px] mb-1">{day}</div>
+                                      <div className="bg-green-400 text-black text-[9px] rounded px-1 py-0.5">7PM</div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              <button className="w-full bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-50 transition">
+                                ⏰ Enable Smart Scheduling Feature
+                              </button>
+                              <div className="grid grid-cols-2 gap-2">
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Schedule Next Post
+                                </button>
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Set Reminders
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {Math.abs(selectedCreator.video_length_after - selectedCreator.video_length_before) > 20 && (
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-4 hover:bg-white/20 transition cursor-pointer">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-white/20 rounded-full p-2">
+                            <Film className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-bold">Adjust Video Length</p>
+                              <span className="bg-orange-500 text-xs px-2 py-1 rounded-full font-bold">HIGH</span>
+                            </div>
+                            <p className="text-sm opacity-90 mb-3">
+                              Your sweet spot is {selectedCreator.video_length_before}s. Current {selectedCreator.video_length_after}s videos have {Math.round(((selectedCreator.avg_views_before - selectedCreator.avg_views_after) / selectedCreator.avg_views_before) * 100)}% lower completion rate.
+                            </p>
+                            <div className="space-y-2">
+                              <div className="bg-white/10 rounded p-2 text-xs">
+                                <p className="font-semibold mb-2">🎬 Recommended Video Length:</p>
+                                <div className="flex items-center gap-2">
+                                  <div className="flex-1 bg-white/20 rounded-full h-2">
+                                    <div className="bg-green-400 h-2 rounded-full" style={{ width: '75%' }} />
+                                  </div>
+                                  <span className="font-bold">{selectedCreator.video_length_before}s</span>
+                                </div>
+                                <p className="mt-1 opacity-80">Ideal range: {selectedCreator.video_length_before - 10}s - {selectedCreator.video_length_before + 10}s</p>
+                              </div>
+                              <button className="w-full bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-50 transition">
+                                🎥 Show Length Guide in Camera
+                              </button>
+                              <div className="grid grid-cols-2 gap-2">
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  View Analytics
+                                </button>
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Timer Settings
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {selectedCreator.posts_per_week < 3 && (
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-4 hover:bg-white/20 transition cursor-pointer">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-white/20 rounded-full p-2">
+                            <Calendar className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-bold">Increase Posting Frequency</p>
+                              <span className="bg-red-500 text-xs px-2 py-1 rounded-full font-bold">CRITICAL</span>
+                            </div>
+                            <p className="text-sm opacity-90 mb-3">
+                              Algorithm favors 3-5 posts/week. You're at {selectedCreator.posts_per_week.toFixed(1)}/week. {selectedCreator.days_since_last_post} days since last post.
+                            </p>
+                            <div className="space-y-2">
+                              <div className="bg-white/10 rounded p-2 text-xs">
+                                <p className="font-semibold mb-2">📅 Suggested Content Calendar:</p>
+                                <div className="space-y-1">
+                                  <div className="flex items-center justify-between">
+                                    <span>Monday</span>
+                                    <span className="bg-purple-400 text-white px-2 py-0.5 rounded">7:00 PM</span>
+                                  </div>
+                                  <div className="flex items-center justify-between">
+                                    <span>Wednesday</span>
+                                    <span className="bg-purple-400 text-white px-2 py-0.5 rounded">7:00 PM</span>
+                                  </div>
+                                  <div className="flex items-center justify-between">
+                                    <span>Friday</span>
+                                    <span className="bg-purple-400 text-white px-2 py-0.5 rounded">7:00 PM</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <button className="w-full bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-50 transition">
+                                📲 Send Reminder: "Time to Post!"
+                              </button>
+                              <div className="grid grid-cols-2 gap-2">
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Draft Templates
+                                </button>
+                                <button className="bg-white/20 px-3 py-2 rounded text-xs font-semibold hover:bg-white/30 transition">
+                                  Batch Recording
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {!selectedCreator.uses_trending_filters && (
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-4 hover:bg-white/20 transition cursor-pointer">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-white/20 rounded-full p-2">
+                            <Activity className="w-5 h-5" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="font-bold">Try Trending Effects & Filters</p>
+                              <span className="bg-yellow-500 text-xs px-2 py-1 rounded-full font-bold text-black">MEDIUM</span>
+                            </div>
+                            <p className="text-sm opacity-90 mb-3">
+                              Videos with trending effects get 3.2x more reach. Unlock popular filters for your niche.
+                            </p>
+                            <div className="space-y-2">
+                              <div className="bg-white/10 rounded p-2 text-xs">
+                                <p className="font-semibold mb-1">✨ Hot Effects Right Now:</p>
+                                <ul className="space-y-1 ml-4">
+                                  <li>• "Bold Glamour" - 850K uses today</li>
+                                  <li>• "Green Screen" - 620K uses today</li>
+                                  <li>• "Time Warp" - 430K uses today</li>
+                                </ul>
+                              </div>
+                              <button className="w-full bg-white text-purple-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-50 transition">
+                                ✨ Highlight Effects in Editor
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-4 pt-4 border-t border-white/20">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="opacity-80">Estimated Recovery Time</span>
+                      <span className="font-bold">
+                        {selectedCreator.riskScore > 0.8 ? '2-3 weeks' :
+                         selectedCreator.riskScore > 0.5 ? '1-2 weeks' :
+                         '3-7 days'}
+                      </span>
+                    </div>
+                    <div className="mt-2 text-xs opacity-75">
+                      If {selectedCreator.name.split(' ')[0]} implements these changes
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="bg-white rounded-lg shadow-lg p-12 text-center">
+                <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">Select a Creator</h3>
+                <p className="text-gray-500">Choose a creator from the list to view detailed insights and recommendations</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Crowdsourced Drop Reasons */}
+        <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            <TrendingDown className="w-7 h-7 text-red-500" />
+            Common Reasons for TikTok Viewership Drops
+            <span className="text-sm font-normal text-gray-500">(Crowdsourced Research)</span>
+          </h2>
+          <p className="text-gray-600 mb-6">Based on analysis of creator experiences, platform updates, and industry research</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {commonDropReasons.map((reason, idx) => (
+              <div key={idx} className="bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-lg p-4 hover:border-purple-300 transition">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-bold text-gray-900">{reason.category}</h3>
+                  <span className={`text-xs font-semibold ${getImpactColor(reason.impact)}`}>
+                    {reason.impact}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">{reason.description}</p>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full font-medium">
+                    {reason.frequency}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-8 text-center text-sm text-gray-500">
+          <p>Creator Momentum AI - Powered by Interpretable Machine Learning</p>
+          <p className="mt-1">Designed for TikTok Product & Growth Teams</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CreatorMomentumDashboard;;
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
